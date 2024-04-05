@@ -21,18 +21,17 @@ class Triangle {
         this.b = b;
         this.c = c;
 
-        if (this.a > this.b + this.c || this.b > this.a + this.c || this.c > this.a + this.b) {
+        if (a > b + c || b > a + c || c > a + b) {
             throw new Error ("Треугольник с такими сторонами не существует");
         }
     }
 
     get perimeter() {
-        let perimeter = this.a + this.b + this.c;
-        return perimeter;
+      return this.a + this.b + this.c;
     }
 
     get area() {
-        let halfPerimeter = (this.a + this.b + this.c) / 2;
+        let halfPerimeter = this.perimeter / 2;
         let S = Math.sqrt(halfPerimeter * (halfPerimeter - this.a) * (halfPerimeter - this.b) * (halfPerimeter - this.c));
         return +S.toFixed(3);
     }
