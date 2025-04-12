@@ -1,9 +1,38 @@
 //Задача № 1
-const md5 = require('./js-md5.js');
+
+function debounceDecoratorNew(func, delay) {
+    let timeoutId = null;
+    wrapper.count = 0;
+    wrapper.allCount = 0;
+  
+    function wrapper(...args) {
+      wrapper.allCount++;
+      if (!timeoutId) {
+      func(...args);
+      wrapper.count++;
+    }
+  
+    clearTimeout(timeoutId);
+  
+    timeoutId = setTimeout(() => {
+      func(...args);
+      wrapper.count++;
+    }, delay)
+  }
+  
+    return wrapper;
+  }
+
+  module.exports = {
+    debounceDecoratorNew, 
+  }
+  
+
+//Задача № 2
 
 function cachingDecoratorNew(func) {
   let cache = [];
-  const maxCacheValuesCount = 5;
+  
   return (...args) => {
     const hash = md5(args);
     let objectInCache = cache.find((item) => item.hash === hash);
@@ -26,28 +55,3 @@ function cachingDecoratorNew(func) {
 module.exports = {
   cachingDecoratorNew
 }
-
-//Задача № 2
-function debounceDecoratorNew(func, delay) {
-  let timeoutId = null;
-  wrapper.count = 0;
-  wrapper.allCount = 0;
-
-  function wrapper(...args) {
-    wrapper.allCount++;
-    if (!timeoutId) {
-    func(...args);
-    wrapper.count++;
-  }
-
-  clearTimeout(timeoutId);
-
-  timeoutId = setTimeout(() => {
-    func(...args);
-    wrapper.count++;
-  }, delay)
-}
-
-  return wrapper;
-}
- 
